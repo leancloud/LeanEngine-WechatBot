@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var todos = require('./routes/todos');
+var wechat = require('./routes/wechatBot');
 var cloud = require('./cloud');
 
 var app = express();
@@ -18,7 +18,9 @@ app.use(express.static('public'));
 app.use(cloud);
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 
 // 未处理异常捕获 middleware
@@ -32,8 +34,9 @@ app.use(function(req, res, next) {
   d.add(req);
   d.add(res);
   d.on('error', function(err) {
-    console.error('uncaughtException url=%s, msg=%s', req.url, err.stack || err.message || err);
-    if(!res.finished) {
+    console.error('uncaughtException url=%s, msg=%s', req.url, err.stack ||
+      err.message || err);
+    if (!res.finished) {
       res.statusCode = 500;
       res.setHeader('content-type', 'application/json; charset=UTF-8');
       res.end('uncaughtException');
@@ -43,11 +46,13 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-  res.render('index', { currentTime: new Date() });
+  res.render('index', {
+    currentTime: new Date()
+  });
 });
 
 // 可以将一类的路由单独保存在一个文件中
-app.use('/todos', todos);
+app.use('/wechat', wechat);
 
 // 如果任何路由都没匹配到，则认为 404
 // 生成一个异常让后面的 err handler 捕获
@@ -63,7 +68,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) { // jshint ignore:line
     var statusCode = err.status || 500;
-    if(statusCode === 500) {
+    if (statusCode === 500) {
       console.error(err.stack || err);
     }
     res.status(statusCode);

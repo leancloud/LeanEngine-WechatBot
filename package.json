@@ -1,7 +1,7 @@
 {
-  "name": "node-js-getting-started",
+  "name": "LeanEngine_Weixin_Sample",
   "version": "1.0.0",
-  "description": "A sample Node.js app using Express 4",
+  "description": "A sample Weixin server app using LeanEngine",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -10,7 +10,8 @@
     "node",
     "LeanCloud",
     "LeanEngine",
-    "express"
+    "express",
+    "Weixin"
   ],
   "license": "MIT",
   "dependencies": {
@@ -18,6 +19,10 @@
     "cookie-parser": "^1.3.5",
     "ejs": "2.3.1",
     "express": "4.12.3",
-    "leanengine": "^0.4.0"
+    "leanengine": "^0.4.0",
+    "request": "^2.69.0",
+    "strformat": "0.0.7",
+    "wechat": "^2.0.3",
+    "wechat-api": "^1.24.0"
   }
 }
